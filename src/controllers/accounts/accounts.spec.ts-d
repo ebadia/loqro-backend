@@ -1,0 +1,109 @@
+import { Account } from '../../entities/Account.entity'
+import { Test } from '@nestjs/testing'
+import { AccountsService } from './accounts.service'
+import { AccountsController } from './accounts.controller'
+import { getRepositoryToken, getEntityManagerToken } from '@nestjs/typeorm'
+
+const mockRepository = {
+  id: 1,
+  email: 'valid@email.com',
+  passwordHash: '$2b$10$h.AUUGvFGs6kKc4riW0Z7ON9xvCiRt/jmnPPRiOt2vE5JMR3pv9Iy'
+}
+
+const userRepo = {
+  id: 1,
+  first_name: 'John',
+  last_name: 'Doe',
+  mobile: '666555001',
+  type: 'Tutor',
+  account: {
+    id: 1,
+    email: 'john@xnova.com',
+    password: '$2b$10$AZHiZMt0Z99aB7v00ZuA/OiZBDDAYqIOMecyt1eCq2i6oblP7hW4m'
+  }
+}
+
+describe('AccountsController', () => {
+  let accountsController: AccountsController
+  let accountsService: AccountsService
+
+  beforeEach(async () => {
+    const module = await Test.createTestingModule({
+      controllers: [AccountsController],
+      providers: [
+        AccountsService,
+        {
+          provide: getRepositoryToken(Account),
+          useValue: mockRepository
+        },
+        {
+          provide: getEntityManagerToken(),
+          useValue: userRepo
+        }
+      ]
+    }).compile()
+
+    accountsService = module.get<AccountsService>(AccountsService)
+    accountsController = module.get<AccountsController>(AccountsController)
+  })
+
+  describe('Login', () => {
+    it('should exist Accounts controller', () => {
+      expect(accountsController).toBeDefined()
+    })
+
+    it('should exist Accounts service', () => {
+      expect(accountsService).toBeDefined()
+    })
+
+    it('should return true with ok password logged', async () => {
+      jest
+        .spyOn(accountsService, 'login')
+        .mockImplementation(() => mockRepository)
+      const user = {
+        email: 'notvalid@email.com',
+        password: '12345'
+      }
+      const account = await accountsService.login(user)
+      console.log('USER', user)
+      console.log('ACCOUNT', account)
+      const res = await accountsService.compareHash(
+        user.password,
+        account.passwordHash
+      )
+      expect(res).toBe(true)
+    })
+
+    it('should return false with wrong password logged', async () => {
+      jest
+        .spyOn(accountsService, 'login')
+        .mockImplementation(() => mockRepository)
+      const user = {
+        email: 'valid@email.com',
+        password: '1234568'
+      }
+      const account = await accountsService.login(user)
+      const res = await accountsService.compareHash(
+        user.password,
+        account.passwordHash
+      )
+      expect(res).toBe(false)
+    })
+  })
+
+  it('should return token ok password logged', async () => {
+    jest
+      .spyOn(accountsService, 'login')
+      .mockImplementation(() => mockRepository)
+    const user = {
+      email: 'valid@email.com',
+      password: '12345'
+    }
+    const account = await accountsService.login(user)
+    const res = await accountsService.compareHash(
+      user.password,
+      account.passwordHash
+    )
+    expect(res).toBe(true)
+  })
+})

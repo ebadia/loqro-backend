@@ -1,0 +1,22 @@
+div Familia #{user.last_name},
+| Os escribimos para notificartos que esta disponible para confirmación de asistencia una nueva actividad del colegio. Los detalles de la actividad son los siguientes:
+| &nbsp;
+if actividad.obligatoria
+    div(style='margin-top: 20px;') #[span(style="font-weight: bold;") ESTA ACTIVIDAD ES OBLIGATORIA]
+else
+    div(style='margin-top: 20px;') #[span(style="font-weight: bold;") ESTA ACTIVIDAD ES OPTATIVA]
+div(style='margin-top: 20px;') Actividad: #[span(style="font-weight: bold;") #{actividad.nombre}]
+div Alumno: #[span(style="font-weight: bold;") #{user.first_name}&nbsp;#{user.last_name}]
+div Curso: #[span(style="font-weight: bold;") #{user.curso.descripcion}&nbsp;#{user.last_name}]
+| &nbsp;
+div(style='margin-top: 20px;') Fecha: #[span(style="font-weight: bold;") #{actividad.fecha_inicio}]
+div Fecha: #[span(style="font-weight: bold;") #{actividad.fecha_inicio}]
+div(style='margin-top: 20px;')
+    p
+    | Para realizar la reserva de plaza para esta actividad puedes hacerlo en la plataforma del colegio.
+hr
+div Un saludo desde Ampanova.
+| &nbsp;
+div Si quieres contactar con nosotros, no respondas a este correo.
+| Puedes hacerlo enviando un correo a: 
+a(href='mailto:contacto@xnova.com') Contacta con Ampanova
