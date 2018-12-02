@@ -15,13 +15,10 @@ import {
   QueryFailedError,
   AfterLoad
 } from 'typeorm'
-
-import { Cliente } from './Cliente.entity'
-import { Evento } from './Evento.entity'
-import { Pedido } from './Pedido.entity'
+import { Producto } from './Producto.entity'
 
 @Entity()
-export class Producto {
+export class Pedido {
   @PrimaryGeneratedColumn() id: number
   @CreateDateColumn({
     select: false
@@ -34,42 +31,44 @@ export class Producto {
 
   @Column('character varying', {
     nullable: true,
-    unique: true,
     length: 255
   })
-  nombre: string
+  name: string
 
   @Column('character varying', {
     nullable: true
   })
-  descripcion: string
+  phone: string
 
   @Column('character varying', {
     nullable: true
   })
-  imagen: string
-
-  @Column('real', {
-    nullable: false,
-    default: 0
-  })
-  precio: number
-
-  @Column('real', {
-    nullable: false,
-    default: 0
-  })
-  oferta: number
+  email: string
 
   @Column('character varying', {
     nullable: true
   })
-  desde: string
+  line1: string
 
   @Column('character varying', {
     nullable: true
   })
-  hasta: string
+  line2: string
+
+  @Column('character varying', {
+    nullable: true
+  })
+  city: string
+
+  @Column('character varying', {
+    nullable: true
+  })
+  postal_code: string
+
+  @Column('character varying', {
+    nullable: true
+  })
+  state: string
 
   // @Column('boolean', {
   //   nullable: true
@@ -78,12 +77,6 @@ export class Producto {
 
   // relaciones
 
-  @OneToMany(type => Pedido, pedido => pedido.producto)
-  pedidos: Pedido[]
-
-  @ManyToOne(type => Cliente, cliente => cliente.productos)
-  cliente: Cliente
-
-  @OneToMany(type => Evento, evento => evento.producto)
-  eventos: Evento[]
+  @ManyToOne(type => Producto, producto => producto.pedidos)
+  producto: Producto
 }

@@ -14,6 +14,7 @@ import { ClientesModule } from '@controllers/clientes/clientes.module'
 import * as dotenv from 'dotenv'
 import { EventosModule } from '@controllers/eventos/eventos.module'
 import { AccountsModule } from '@controllers/accounts/accounts.module'
+import { PedidosModule } from '@controllers/pedidos/pedidos.module'
 dotenv.config()
 
 const dbConfig: any = {
@@ -36,6 +37,7 @@ const dbConfig: any = {
     UsersModule,
     ProductosModule,
     ClientesModule,
+    PedidosModule,
     EventosModule
   ],
   controllers: [AppController],

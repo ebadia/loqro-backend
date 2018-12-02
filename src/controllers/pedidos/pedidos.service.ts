@@ -13,15 +13,15 @@ import { validate } from 'class-validator'
 import * as moment from 'moment'
 import * as _ from 'lodash'
 
-import { Producto } from '@entities/Producto.entity'
+import { Pedido } from '@entities/Pedido.entity'
 import { Utils } from '@common/utils'
-import { CreateProductoDto } from './dto/create-producto.dto'
-import { UpdateProductoDto } from './dto/update-producto.dto'
+import { CreatePedidoDto } from './dto/create-pedido.dto'
+import { UpdatePedidoDto } from './dto/update-pedido.dto'
 
 @Injectable()
-export class ProductosService {
+export class PedidosService {
   constructor(
-    @InjectRepository(Producto) private readonly repo: Repository<Producto>
+    @InjectRepository(Pedido) private readonly repo: Repository<Pedido>
   ) {}
 
   async findAll(page: number = 0, size: number = 10): Promise<any[]> {
@@ -38,7 +38,7 @@ export class ProductosService {
     return await this.repo.count()
   }
 
-  async findOne(id: number): Promise<Producto> {
+  async findOne(id: number): Promise<Pedido> {
     const anItem = await this.repo.findOne(id)
     if (!anItem) {
       throw new NotFoundException()
@@ -46,16 +46,16 @@ export class ProductosService {
     return anItem
   }
 
-  async create(product: CreateProductoDto): Promise<Producto> {
+  async create(product: CreatePedidoDto): Promise<Pedido> {
     const err = await validate(product)
     if (err.length > 0) {
       Utils.sendErr('Validation error.')
     }
-    const anItem = Object.assign(new Producto(), product)
+    const anItem = Object.assign(new Pedido(), product)
     return await this.repo.save(anItem)
   }
 
-  async update(id: number, product: UpdateProductoDto): Promise<Producto> {
+  async update(id: number, product: UpdatePedidoDto): Promise<Pedido> {
     console.log('product :', product)
     const productTmp = await this.repo.findOne(id)
     if (!productTmp) {
@@ -76,8 +76,8 @@ export class ProductosService {
     await this.repo.remove(obj)
   }
 
-  async upload(file: any, producto: number, req: any): Promise<Producto> {
-    const item = await this.repo.findOne(producto)
+  async upload(file: any, pedido: number, req: any): Promise<Pedido> {
+    const item = await this.repo.findOne(pedido)
     if (!item) {
       throw new NotFoundException()
     }

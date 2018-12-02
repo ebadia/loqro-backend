@@ -6,6 +6,6 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api/v1')
   // tslint:disable-next-line:radix
-  await app.listen(parseInt(process.env.PORT) || 3400)
+  await app.listen(parseInt(process.env.PORT) || 3500)
 }
 bootstrap()
