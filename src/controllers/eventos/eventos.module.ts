@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { EventosController } from './Eventos.controller'
-import { EventosService } from './Eventos.service'
+import { EventosController } from './eventos.controller'
+import { EventosService } from './eventos.service'
 import { Evento } from '@entities/Evento.entity'
 
 @Module({
