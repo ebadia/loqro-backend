@@ -19,7 +19,7 @@ import {
 } from '@nestjs/common'
 import * as _ from 'lodash'
 import { AuthGuard } from '@nestjs/passport'
-import { ClientesService } from './Clientes.service'
+import { ClientesService } from './clientes.service'
 import { Cliente } from '@entities/Cliente.entity'
 import { CreateClienteDto } from './dto/create-cliente.dto'
 import { UpdateClienteDto } from './dto/update-cliente.dto'
