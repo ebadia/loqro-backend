@@ -19,7 +19,7 @@ import {
 } from '@nestjs/common'
 import * as _ from 'lodash'
 import { AuthGuard } from '@nestjs/passport'
-import { EventosService } from './Eventos.service'
+import { EventosService } from './eventos.service'
 import { Evento } from '@entities/Evento.entity'
 import { CreateEventoDto } from './dto/create-evento.dto'
 import { UpdateEventoDto } from './dto/update-evento.dto'
